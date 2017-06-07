@@ -12,7 +12,7 @@ fieldset {
 legend {
 	color:green;
 	background-color:rgb(173, 255, 206);
-	padding: 0.2em 0.5em;
+	padding:0.2em 0.5em;
 	border:1px solid green;
 	font-size:90%;
 	text-align:left;
@@ -36,9 +36,13 @@ i{
 }
 input[type=submit], input[type=reset] {
     background-color: green;
-    border: 5px;
-    color: white;
-    padding: 16px 32px;
-    margin: 4px 2px;
-    cursor: pointer;
+    border:5px;
+    color:white;
+    padding:16px 32px;
+    margin:4px 2px;
+    cursor:pointer;
+}
+table{
+	width:80%;
+	border: 2px solid green;
 }

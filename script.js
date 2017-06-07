@@ -1,21 +1,39 @@
 /*
 Creation date: 6-6-2017
 Purpose:  validating the HTML page registration_form.html
+File Path: D:/Git Directory/demoWeb/registration_form.htm
 Created By : Anushree.
 */
 alert('Hello Student, register yourself here.');
+/**
+    * Functionality: validate the entire form before submitting it
+    * @params: null
+    * @return: true/false
+    */
+function validateForm()
+{
+	if(matchPassword())
+	{
+		confirm('Are you sure you want to submit it?');
+		event.preventDefault();
+		updateStudentTable();
+		return true;
+	}
+	return false;
+}
 /**
     * Functionality: match entered password and retyped password
     * @params: null
     * @return: true/false
     */
-function match_password()
+function matchPassword()
 {  
 	var pass1 = document.form.password_1.value;
 	var pass2 = document.form.password_2.value;  
 	if(pass1 == pass2)
 		return true;    
-	alert("Password must be same!");  
+	alert("Password must be same!");
+	document.form.password_2.value = null;
 	return false;  	  
 }
 /**
@@ -67,10 +85,27 @@ function isAlphaNumeric(username)
     */
 function isEmail(emailId)
 {
-	var emailPattern = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+	var emailPattern = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	if(emailId.value.match(emailPattern))
 		return true;
 	alert("It is not a valid Email Id type!");
 	emailId.value = null;
 	return false;
+}
+/**
+    * Functionality: update student table to update the details of the students who have registered successfully
+    * @params: null
+    * @return: null
+    */
+function updateStudentTable()
+{
+	var row= studentTable.insertRow(1);                      
+	var cell1 = row.insertCell(0);
+	var cell2 = row.insertCell(1);
+	var cell3 = row.insertCell(2);
+	var cell4 = row.insertCell(3);
+	cell1.innerHTML = document.getElementById("userName").value;
+	cell2.innerHTML = document.getElementById("firstName").value;
+	cell3.innerHTML = document.getElementById("lastName").value;
+	cell4.innerHTML = document.getElementById("dob").value;
 }
