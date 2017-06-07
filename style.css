@@ -1,0 +1,44 @@
+/*
+Creation date: 6-6-2017
+Purpose:  styling the HTML page registration_form.html
+Created By : Anushree.
+*/
+fieldset {
+	background-color:rgb(173, 255, 206);
+	margin:10px;
+	padding:25px;
+	border:1px solid green;
+}
+legend {
+	color:green;
+	background-color:rgb(173, 255, 206);
+	padding: 0.2em 0.5em;
+	border:1px solid green;
+	font-size:90%;
+	text-align:left;
+}
+label {
+	color:rgb(137, 66, 244);
+	float:left;
+	width:15%;
+	margin-right:5px;
+	padding-top:2px;
+	text-align:right;
+}
+input {
+	padding:1px;
+}
+textarea {
+	resize:none;
+}
+i{
+	color:rgb(137, 66, 244);
+}
+input[type=submit], input[type=reset] {
+    background-color: green;
+    border: 5px;
+    color: white;
+    padding: 16px 32px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
