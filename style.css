@@ -1,6 +1,7 @@
 /*
 Creation date: 6-6-2017
 Purpose:  styling the HTML page registration_form.html
+File Path: D:/Git Directory/demoWeb/style.css
 Created By : Anushree.
 */
 fieldset {
@@ -17,7 +18,7 @@ legend {
 	font-size:90%;
 	text-align:left;
 }
-label {
+a, label {
 	color:rgb(137, 66, 244);
 	float:left;
 	width:15%;
@@ -34,6 +35,10 @@ textarea {
 i{
 	color:rgb(137, 66, 244);
 }
+h2, h4 {
+	text-align:center;
+	color:blue;
+}
 input[type=submit], input[type=reset] {
     background-color: green;
     border:5px;
@@ -42,7 +47,7 @@ input[type=submit], input[type=reset] {
     margin:4px 2px;
     cursor:pointer;
 }
-table{
+table {
 	width:80%;
 	border: 2px solid green;
 }
