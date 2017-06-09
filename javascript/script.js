@@ -1,39 +1,51 @@
 /*
 Creation date: 6-6-2017
 Purpose:  validating the HTML page registration_form.html
-File Path: D:/Git Directory/demoWeb/script.js
+File Path: D:/Git Directory/demoWeb/javascript/script.js
 Created By : Anushree.
 */
-alert('Hello Student, register yourself here.');i
+alert('Hello Student, register yourself here.');
+/**
+* Functionality: activate submit button on click of i agree
+* @params: null
+* @return: null
+*/
+function activateSubmit()
+{
+	if(document.getElementById("iAgree").checked == true)
+		document.form.submit.disabled = false;
+	else if(document.getElementById("iAgree").checked == false)
+		document.form.submit.disabled = true;
+}
 /**
 * Functionality: validate the entire form before submitting it
-* @params: js event
+* @params: null
 * @return: Boolean
 */
-function validateForm(event)
+function validateForm()
 {
-	if(document.form.f_name.value == "")
+	if(document.form.fName.value == "")
 	{
 		alert("Enter your First Name!");
-		document.form.f_name.focus();
+		document.form.fName.focus();
 		return false;
 	}
-	if(document.form.l_name.value == "")
+	if(document.form.lName.value == "")
 	{
 		alert("Enter your Last Name!");
-		document.form.l_name.focus();
+		document.form.lName.focus();
 		return false;
 	}
-	if(document.form.fathers_first_name.value == "")
+	if(document.form.fathersFirstName.value == "")
 	{
 		alert("Enter your Father's First Name!");
-		document.form.fathers_first_name.focus();
+		document.form.fathersFirstName.focus();
 		return false;
 	}
-	if(document.form.fathers_last_name.value == "")
+	if(document.form.fathersLastName.value == "")
 	{
 		alert("Enter your Father's Last Name!");
-		document.form.fathers_last_name.focus();
+		document.form.fathersLastName.focus();
 		return false;
 	}
 	if(document.form.dob.value == "")
@@ -42,27 +54,57 @@ function validateForm(event)
 		document.form.dob.focus();
 		return false;
 	}
-	if(!isEmail(document.form.email.value))
+	if(document.form.email.value == "")
+	{
+		alert("Enter your Email ID!");
+		document.form.email.focus();
 		return false;
-	if(isMobileNumber(document.form.mobile_no.value))
+	}
+	if(document.form.mobileNo.value == "")
+	{
+		alert("Enter your Mobile Number!");
+		document.form.mobileNo.focus();
 		return false;
-	if(document.form.perm_address.value == "")
+	}
+	var address = document.form.permAddress;
+	if(trimfield(address.value) == "")
 	{
 		alert( "Enter your Permanent Address!");
-		document.form.perm_address.focus();
+		document.form.permAddress.focus();
 		return false;
 	}
-	if(document.form.comm_address.value == "")
+	address = document.form.commAddress;
+	if(trimfield(address.value) == "")
 	{
 		alert("Enter your Communication Address!");
-		document.form.comm_address.focus();
+		document.form.commAddress.focus();
 		return false;
 	}
-	
-	if(!matchPassword())
+	if(document.form.username.value == "")
+	{
+		alert("Enter your username in aplphanumerics{[a-z],[A-Z],[0-9]} only!");
+		document.form.username.focus();
+		return false;
+	}
+	if(document.form.password1.value == "")
+	{
+		alert("Enter a password for your account!");
+		document.form.password1.focus();
+		return false;
+	}
+	if(document.form.password2.value == "")
+	{
+		alert("Confirm your password here!");
+		document.form.password2.focus();
+		return false;
+	}
+	if(document.form.iAgree.checked == false)
+	{
+		alert("You need to agree with the terms and conditions!");
+		document.form.iAgree.focus();
 		return false;	
+	}
 	confirm('Are you sure you want to submit it?');
-	event.preventDefault();
 	updateStudentTable();
 }
 /**
@@ -72,13 +114,13 @@ function validateForm(event)
 */
 function matchPassword()
 {  
-	var pass1 = document.form.password_1.value;
-	var pass2 = document.form.password_2.value;  
+	var pass1 = document.form.password1.value;
+	var pass2 = document.form.password2.value;  
 	if(pass1 == pass2)
 		return true;    
 	alert("Password must be same!");
-	document.form.password_1.value = null;
-	document.form.password_2.value = null;
+	document.form.password1.value = null;
+	document.form.password2.value = null;
 	return false;  	  
 }
 /**
@@ -93,6 +135,7 @@ function isAlpha(text)
       return true;
     alert("Alphabets only!");
 	text.value = null;
+	document.form.text.focus();
     return false;
 }
 /**
@@ -107,7 +150,7 @@ function isMobileNumber(number)
 		return true;
 	alert("Please enter 10 digit mobile number!");
 	number.value = null;
-	document.form.number.focus();
+	number.focus();
 	return false;
 }
 /**
@@ -127,21 +170,23 @@ function isAlphaNumeric(username)
 }
 /**
 * Functionality: validate email id type entered by the user
-* @params: String emailId
+* @params: String email
 * @return: Boolean
 */
-function isEmail(emailId)
+
+function isEmail(email)
 {
-	var atpos = emailId.indexOf("@");
-	var dotpos = emailId.lastIndexOf(".");
-	if(emailId == "" || atpos < 1 || ( dotpos - atpos < 2 )) 
-	{
-		alert("Enter valid email ID");
-		emailId.value = null;
-		document.form.emailId.focus();
-		return false;
-	}
+	//var em = String(document.getElementById("email"));
+	//alert(typeof email);
+	var emailPattern = /^[a-z0-9]+$/i;	//dummy regex
+	if(email.value.match(emailPattern))
+		return true;	
+	alert("Enter valid email ID");
+	email.value = null;
+	email.focus();
+	return false;
 }
+
 /**
 * Functionality: update student table to update the details of the students who have registered successfully
 * @params: null
@@ -160,11 +205,11 @@ function updateStudentTable()
 	cell4.innerHTML = document.getElementById("dob").value;
 }
 /**
-* Functionality: to activate submit button on checking i agree
-* @params: Checkbox checkbox, Submit submit
-* @return: null
+* Functionality: to trim the textarea before checking for empty
+* @params: String string
+* @return: String
 */
-function isChecked(checkbox, submit)
-{
-    document.getElementById(submit).disabled = !checkbox.checked;
+function trimfield(string) 
+{ 
+    return string.replace(/^\s+|\s+$/g,''); 
 }

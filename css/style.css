@@ -1,7 +1,7 @@
 /*
 Creation date: 6-6-2017
 Purpose:  styling the HTML page registration_form.html
-File Path: D:/Git Directory/demoWeb/style.css
+File Path: D:/Git Directory/demoWeb/css/style.css
 Created By : Anushree.
 */
 fieldset {
@@ -39,8 +39,14 @@ h2, h4 {
 	text-align:center;
 	color:blue;
 }
-input[type=submit], input[type=reset] {
-    background-color: green;
+p{
+	text-align:center;
+}
+input[type=button]:disabled {
+    background: #dddddd;
+}
+input[type=button], input[type=reset] {
+	background-color:green;
     border:5px;
     color:white;
     padding:16px 32px;
