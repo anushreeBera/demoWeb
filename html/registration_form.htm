@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!--
+		Creation date: 6-6-2017
+		Purpose:  A student registration form to register students
+		File Path: D:/Git Directory/demoWeb/script.js
+		Created By : Anushree.
+		-->
+		<title>Registration Form</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<script type="text/javascript" src="script.js"></script>
+		<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+	</head>
+	<body>
+		<form name="form" method="POST" autocomplete="on" onsubmit="updateStudentTable()">
+			<h2>Student Registration Form</h2>
+			<fieldset>
+			<legend>Personal Information</legend>
+				<label for="f_name">First Name : *</label> <input type="text" name="f_name" id="firstName" autofocus required onchange="isAlpha(f_name)"> <br/> <br/>
+				<label for="m_name">Middle Name : </label> <input type="text" name="m_name" onchange="isAlpha(m_name)"> <br/> <br/>
+				<label for="l_name">Last Name : *</label> <input type="text" name="l_name" id="lastName" required onchange="isAlpha(l_name)"> <br/> <br/>
+				<label for="fathers_first_name">Father's First Name : *</label> <input type="text" name="fathers_first_name" required onchange="isAlpha(fathers_first_name)"> <br/> <br/>
+				<label for="fathers_last_name">Father's Last Name : *</label> <input type="text" name="fathers_last_name" required onchange="isAlpha(fathers_last_name)"> <br/> <br/>
+				<label for="dob">Date of Birth : *</label> <input type="date" name="dob" id="dob" max="2017-06-02" required> <br/> <br/>
+				<label for="gender">Gender : *</label> <input type="radio" name="gender" id="gender" value="male" checked>Male &nbsp;
+													  <input type="radio" name="gender" value="female">Female <br/> <br/>
+				<label for="caste">Caste : *</label>
+				<select name="caste">
+					<option value="general" selected>General</option>
+					<option value="SC">SC</option>
+					<option value="ST">ST</option>
+					<option value="OBC">OBC</option>
+				</select>
+			</fieldset>
+			<fieldset>
+			<legend>Communication Details</legend>
+				<label for="email">E-mail Id : *</label> <input type="email" name="email" required  onchange="isEmail(email)"> <br/> <br/>
+				<label for="mobile_no">Mobile Number : *</label> <input type="text" name="mobile_no" maxlength="10" required  onchange="isMobileNumber(mobile_no)"> <br/> <br/>
+				<label for="perm_address">Permanent Address : *</label> <textarea name="perm_address" rows="7" cols="30" required></textarea> <br/> <br/>
+				<label for="comm_address">Communication Address : *</label> <textarea name="comm_address" rows="7" cols="30" required></textarea> <br/> <br/>
+			</fieldset>
+			<!--
+			<fieldset>
+			<legend>Education Details</legend>
+				<i>Upload documents for the following:</i> <br/> <br/>
+				<label for="10th_marksheet">10th marksheet : </label> <input type="file" name="10th_marksheet" required> <br/> <br/>
+				<label for="12th_marksheet">12th marksheet : </label> <input type="file" name="12th_marksheet" required> <br/> <br/>
+				<label for="deg_certificate">Degree Certificate : </label> <input type="file" name="deg_certificate" multiple required> <br/> <br/>
+			</fieldset>
+			-->
+			<fieldset>
+			<legend>Create Account</legend>
+				<label for="username">Create a username : *</label> <input type="text" name="username" id="userName" maxlength="15" required onchange="isAlphaNumeric(username)"> <br/> <br/>
+				<label for="password_1">Enter a password : *</label> <input type="password" name="password_1" required> <br/> <br/>
+				<label for="password_2">Confirm password : *</label> <input type="password" name="password_2" required onchange="matchPassword()"> <br/> <br/>
+				<input type="checkbox" name="i_agree" id="iAgree" required onchange="isChecked(this, 'submit')"> <label for="i_agree">I Agree *</label> <br/> <br/>
+				<a href="https://www.google.com/adsense/localized-terms" target="_blank"><i>Terms and Conditions</i></a>
+			</fieldset>
+			<p style="text-align:center;">
+				<input type="reset">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="button" name="submit" id="submitButton" value="Submit" onclick="validateForm(event)">
+			</p>
+		</form>
+		<h4> Student Table</h4>
+		<table id="studentTable" align="center">
+			<tr>
+				<td><b>Username</b></td>
+				<td><b>Firstname</b></td>
+				<td><b>Lastname</b></td>
+				<td><b>Date of Birth</b></td>
+			</tr>
+		</table>
+	</body>
+</html>
