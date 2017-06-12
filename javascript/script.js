@@ -5,6 +5,9 @@ File Path: D:/Git Directory/demoWeb/javascript/script.js
 Created By : Anushree.
 */
 alert('Hello Student, register yourself here.');
+var formData = document.createElement("FORM");
+var usersArray = [];
+var studentsNumber = 0;
 /**
 * Functionality: activate submit button on click of i agree
 * @params: null
@@ -12,10 +15,7 @@ alert('Hello Student, register yourself here.');
 */
 function activateSubmit()
 {
-	if(document.getElementById("iAgree").checked == true)
-		document.form.submit.disabled = false;
-	else if(document.getElementById("iAgree").checked == false)
-		document.form.submit.disabled = true;
+	document.form.submit.disabled = document.getElementById("iAgree").checked ? false : true;
 }
 /**
 * Functionality: validate the entire form before submitting it
@@ -105,7 +105,7 @@ function validateForm()
 		return false;	
 	}
 	confirm('Are you sure you want to submit it?');
-	updateStudentTable();
+	updateStudentTable() ;
 }
 /**
 * Functionality: match entered password and retyped password
@@ -125,7 +125,7 @@ function matchPassword()
 }
 /**
 * Functionality: check for name fields if entered text is contains only alphabets
-* @params: String text
+* @params: String text //description
 * @return: Boolean
 */
 function isAlpha(text)  
@@ -173,11 +173,8 @@ function isAlphaNumeric(username)
 * @params: String email
 * @return: Boolean
 */
-
 function isEmail(email)
 {
-	//var em = String(document.getElementById("email"));
-	//alert(typeof email);
 	var emailPattern = /^[a-z0-9]+$/i;	//dummy regex
 	if(email.value.match(emailPattern))
 		return true;	
@@ -186,7 +183,6 @@ function isEmail(email)
 	email.focus();
 	return false;
 }
-
 /**
 * Functionality: update student table to update the details of the students who have registered successfully
 * @params: null
@@ -194,15 +190,38 @@ function isEmail(email)
 */
 function updateStudentTable()
 {
-	var row= studentTable.insertRow(1);                      
+	if(studentsNumber != 0)
+	{
+		for(var loopIterator = 0;loopIterator < studentsNumber;loopIterator++)
+		{
+			if(usersArray[loopIterator].username === document.getElementById("userName").value)
+				return alert("This Username is already taken.");
+		}
+	}
+	
+	var userObj = {}
+	var formCollection = document.getElementById("form").elements;
+	var totalFields = formCollection.length;
+	$.each(formCollection, function(index, item){
+		userObj[formCollection[index].name] = formCollection[index].value;
+	});
+	
+	usersArray.push(userObj);// OR userArray[studentsNumber] = userObj;
+	
+	var row = studentTable.insertRow(1);                      
 	var cell1 = row.insertCell(0);
 	var cell2 = row.insertCell(1);
 	var cell3 = row.insertCell(2);
 	var cell4 = row.insertCell(3);
-	cell1.innerHTML = document.getElementById("userName").value;
-	cell2.innerHTML = document.getElementById("firstName").value;
-	cell3.innerHTML = document.getElementById("lastName").value;
-	cell4.innerHTML = document.getElementById("dob").value;
+	var cell5 = row.insertCell(4);
+	var cell6 = row.insertCell(5);
+	cell1.innerHTML = usersArray[studentsNumber].username;
+	cell2.innerHTML = usersArray[studentsNumber].fName + " " + usersArray[studentsNumber].mName;
+	cell3.innerHTML = usersArray[studentsNumber].lName;
+	cell4.innerHTML = usersArray[studentsNumber].dob;
+	cell5.innerHTML = '<input type="button" name="update" id="updateButton" value="Update">';	//functionality not assigned yet
+	cell6.innerHTML = '<input type="button" name="delete" id="deleteButton" value="Delete">';	//functionality not assigned yet
+	studentsNumber++;
 }
 /**
 * Functionality: to trim the textarea before checking for empty
