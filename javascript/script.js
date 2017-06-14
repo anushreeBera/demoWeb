@@ -8,6 +8,8 @@ alert('Hello Student, register yourself here.');
 var formData = document.createElement("FORM");
 var usersArray = [];
 var studentsNumber = 0;
+var s, flag = 0;
+var sl=0, temp;     //sl is serial no and temp is required to copy serial no value while update function is in use so that sl still holds the value of last row
 /**
 * Functionality: activate submit button on click of i agree
 * @params: null
@@ -198,6 +200,74 @@ function updateStudentTable()
 				return alert("This Username is already taken.");
 		}
 	}
+	var userObj = {}
+	var formCollection = document.getElementById("form").elements;
+	var totalFields = formCollection.length;
+	$.each(formCollection, function(index, item){
+		userObj[formCollection[index].name] = formCollection[index].value;
+	});	
+	usersArray.push(userObj);						// OR userArray[studentsNumber] = userObj;
+
+	if(flag == 1) 									//if update function has been called then flag will be set to 1, see update function
+	{   
+        temp = s;                                   //s value copied to temp as s stores the serial no/index of the row it is editing
+        var row = studentTable.deleteRow(temp);     //Delete the particular row
+        row = studentTable.insertRow(temp);         //Insert new row in the same location
+        var cell0 = row.insertCell(0);              //Insert new cell at cell no. 0
+        cell0.id = temp;                            //Sets ID same as serial no. as our serial is used internally as index of the table
+        var cell1 = row.insertCell(1);
+        cell1.id = temp + "username";               //ID is set as "indexname" format ex: "4username" so each cell has unique id based on its row and cell content
+        var cell2 = row.insertCell(2);
+        cell2.id = temp + "fName";
+        var cell3 = row.insertCell(3);
+        cell3.id = temp + "lName";
+		var cell4 = row.insertCell(4);
+        cell4.id = temp + "dob";
+        var cell5 = row.insertCell(5);
+        cell5.innerHTML = '<input type="button" name="update" id="updateButton" value="Update" onclick = "update(' + sl + ')">';  //Dynamically creates the update button and assigns the onclick as update(index), sl is the index
+        var cell6 = row.insertCell(6);
+        cell6.innerHTML = '<input type="button" name="delete" id="deleteButton" value="Delete" onclick = "delete(' + sl + ')">';
+		cell0.innerHTML = temp;                                                                  //Assigns previous serial no
+        cell1.innerHTML = document.getElementById("username").value;                            //Assigns username
+        cell2.innerHTML = document.getElementById("fName").value;
+        cell3.innerHTML = document.getElementById("lName").value;
+		cell4.innerHTML = document.getElementById("dob").value;
+        flag = 0;                                          //As update operation ends it sets flag to zero so that a new table row could be added
+    }
+	else												//if at all it is not an update operation then by default the global variable flag is set to zero in update function
+	{               
+        sl++;                       			//normal table update action...increases the index
+        var row= studentTable.insertRow(sl);	//new row
+		var cell0 = row.insertCell(0);       	//new column
+		cell0.id = sl;                      	//set cell ID same as serial/index
+		var cell1 = row.insertCell(1);
+		cell1.id = sl + "name";             	//unique cell id as of row.no and content described above
+		var cell2 = row.insertCell(2);
+		cell2.id = sl + "roll";
+		var cell3 = row.insertCell(3);
+		cell3.id = sl+ "class";
+		var cell4 = row.insertCell(4);
+		var cell5 = row.insertCell(5);
+		var cell6 = row.insertCell(6);
+		cell0.innerHTML = sl;
+		cell1.innerHTML = usersArray[studentsNumber].username;
+		cell2.innerHTML = usersArray[studentsNumber].fName;
+		cell3.innerHTML = usersArray[studentsNumber].lName;
+		cell4.innerHTML = usersArray[studentsNumber].dob;
+		cell5.innerHTML = '<input type="button" name="update" id="updateButton" value="Update" onclick="updateEntry(' + sl + ')">';		//dynamic allocation of button
+		cell6.innerHTML = '<input type="button" name="delete" id="deleteButton" value="Delete" onclick="deleteEntry(' + sl + ')">';
+		studentsNumber++;
+	}
+	
+	/*
+	if(studentsNumber != 0)
+	{
+		for(var loopIterator = 0;loopIterator < studentsNumber;loopIterator++)
+		{
+			if(usersArray[loopIterator].username === document.getElementById("userName").value)
+				return alert("This Username is already taken.");
+		}
+	}
 	
 	var userObj = {}
 	var formCollection = document.getElementById("form").elements;
@@ -207,7 +277,7 @@ function updateStudentTable()
 	});
 	
 	usersArray.push(userObj);// OR userArray[studentsNumber] = userObj;
-	
+		
 	var row = studentTable.insertRow(1);                      
 	var cell1 = row.insertCell(0);
 	var cell2 = row.insertCell(1);
@@ -219,9 +289,37 @@ function updateStudentTable()
 	cell2.innerHTML = usersArray[studentsNumber].fName + " " + usersArray[studentsNumber].mName;
 	cell3.innerHTML = usersArray[studentsNumber].lName;
 	cell4.innerHTML = usersArray[studentsNumber].dob;
-	cell5.innerHTML = '<input type="button" name="update" id="updateButton" value="Update">';	//functionality not assigned yet
-	cell6.innerHTML = '<input type="button" name="delete" id="deleteButton" value="Delete">';	//functionality not assigned yet
+	cell5.innerHTML = '<input type="button" name="update" id="updateButton" value="Update" onclick="updateEntry(' + sl + ')">';		//dynamic allocation of button
+	cell6.innerHTML = '<input type="button" name="delete" id="deleteButton" value="Delete" onclick="deleteEntry(' + sl + ')">';
 	studentsNumber++;
+	*/
+}
+/**
+* Functionality: to update 's'th form fields on click of update button
+* @params: Number s 
+* @return: null
+*/
+function updateEntry(s)   
+{   
+	flag =  1;            // Sets flag = 1 so that it can ensure that control has entered into update and hence that particular line in the table would be edited
+    window.s = s;       // Sets s as a global variable so that it could be used as the table row pointer--> 
+    document.form.username.value = usersArray[s].username; 
+    document.form.fName.value =  usersArray[s].fName;
+    document.form.lName.value = usersArray[s].lName;   // s + lName gives the s value concatenated with the lName to make the id of the particular cell
+	document.form.dob.value = usersArray[s].dob;
+	studentsNumber++;
+}
+/**
+* Functionality: to delete the 's'th row in table on click of delete button
+* @params: Number s 
+* @return: null
+*/
+function deleteEntry(s)   
+{
+	var rowCount = studentTable.rows.length;
+	
+	studentTable.deleteRow(s);
+	studentsNumber--;	
 }
 /**
 * Functionality: to trim the textarea before checking for empty
